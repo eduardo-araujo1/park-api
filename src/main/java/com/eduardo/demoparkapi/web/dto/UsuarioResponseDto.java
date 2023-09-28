@@ -2,7 +2,11 @@ package com.eduardo.demoparkapi.web.dto;
 
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class UsuarioResponseDto {
 
     private Long id;
