@@ -49,7 +49,7 @@ public class UsuarioController {
      return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));
     }
 
-    @Operation(summary = "Recuperar um usuário pelo id",description = "Recuperar um usuário pelo id",
+    @Operation(summary = "Recuperar um usuário pelo id",description = "Requsição exige um Bearer Token. Acesso restrito a ADMIN|CLIENTE",
             security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200",description = "Recurso recuperado com sucesso",
@@ -67,16 +67,13 @@ public class UsuarioController {
         return ResponseEntity.ok(UsuarioMapper.toDto(user));
     }
 
-    @Operation(summary = "Atualizar senha",description = "Atualizar senha",
+    @Operation(summary = "Atualizar senha",description = "Requsição exige um Bearer Token. Acesso restrito a ADMIN|CLIENTE",
             security = @SecurityRequirement(name = "security"),
             responses = {
-                    @ApiResponse(responseCode = "204",description = "Senha atualizada com sucesso",
-                            content = @Content(mediaType = "application/json",schema = @Schema(implementation = Void.class))),
+                    @ApiResponse(responseCode = "204",description = "Senha atualizada com sucesso"),
                     @ApiResponse(responseCode = "400",description = "Senha não confere",
                             content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "403",description = "Usuário sem permissão para acessar este recurso",
-                            content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "404",description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422",description = "Campos inválidos ou mal formatados",
                             content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
@@ -85,11 +82,11 @@ public class UsuarioController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENTE') AND (#id == authentication.principal.id)")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id ,@Valid @RequestBody UsuarioSenhaDto dto){
-        Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(),dto.getNovaSenha(),dto.getConfirmaSenha());
+         usuarioService.editarSenha(id, dto.getSenhaAtual(),dto.getNovaSenha(),dto.getConfirmaSenha());
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Listar todos os usuários",description = "Listar todos os usuários",
+    @Operation(summary = "Listar todos os usuários",description = "Requsição exige um Bearer Token. Acesso restrito a ADMIN",
            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200",description = "Lista com todos os usuários cadastrados",
