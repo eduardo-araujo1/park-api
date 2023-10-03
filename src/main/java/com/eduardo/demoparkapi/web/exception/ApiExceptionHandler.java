@@ -1,5 +1,6 @@
 package com.eduardo.demoparkapi.web.exception;
 
+import com.eduardo.demoparkapi.exception.CpfUniqueViolationException;
 import com.eduardo.demoparkapi.exception.EntityNotFoundException;
 import com.eduardo.demoparkapi.exception.PasswordInvalidException;
 import com.eduardo.demoparkapi.exception.UsernameUniqueViolationException;
@@ -38,7 +39,7 @@ public class ApiExceptionHandler {
 
     }
 
-    @ExceptionHandler(UsernameUniqueViolationException.class)
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
     public ResponseEntity<ErrorMessage> uniqueViolationException(RuntimeException ex,HttpServletRequest request){
         log.error("Api Error - ", ex);
         return ResponseEntity
