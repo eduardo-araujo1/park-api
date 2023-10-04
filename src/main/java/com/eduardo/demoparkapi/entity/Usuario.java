@@ -19,18 +19,14 @@ import java.util.Objects;
 @Table(name = "usuarios")
 @EntityListeners(AuditingEntityListener.class)
 public class Usuario implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
     @Column(name = "username", nullable = false, unique = true, length = 100)
     private String username;
-
     @Column(name = "password", nullable = false, length = 200)
     private String password;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 25)
     private Role role = Role.ROLE_CLIENTE;
@@ -48,7 +44,7 @@ public class Usuario implements Serializable {
     @Column(name = "modificado_por")
     private String modificadoPor;
 
-    public enum Role{
+    public enum Role {
         ROLE_ADMIN, ROLE_CLIENTE
     }
 
@@ -72,3 +68,4 @@ public class Usuario implements Serializable {
                 '}';
     }
 }
+
